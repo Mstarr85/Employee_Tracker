@@ -1,0 +1,26 @@
+{
+  "name": "employee_tracker",
+  "version": "1.0.0",
+  "description": "Employee Tracking System",
+  "main": "server.js",
+  "dependencies": {
+    "mysql": "^2.17.1",
+    "inquirer": "^7.0.3",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mstarr85/Employee_Tracker.git"
+  },
+  "author": "Matthew Starr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mstarr85/Employee_Tracker/issues"
+  },
+  "homepage": "https://github.com/Mstarr85/Employee_Tracker#readme"
+}

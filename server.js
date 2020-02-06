@@ -1,11 +1,11 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// Connection information for sql database
+//create the connection information for the sql database
 var connection = mysql.createConnection({
     host: "localhost",
 
-    // Your port
+    // Your port; if not 3306
     port: 3306,
 
     // Your username
@@ -15,217 +15,189 @@ var connection = mysql.createConnection({
     password: "yourRootPassword",
     database: "employee_trackerDB"
 });
-
-// Connect to mysql server and sql database
+//Connect to the my sql server and database
 connection.connect(function (err) {
     if (err) throw err;
 
-    // Runs the runapp function after connection is made to prompt user
-    runapp();
-});
+    //Run the runApp function after the connection is made to prompt the user
+    runApp();
 
-// Function that prompts user for what action they should take
-function runapp() {
+});
+// Function that prompts the user for what action they should take
+function runApp() {
     inquirer
         .prompt({
-            name: "addDeptEmpRole",
+            name: "create",
             type: "list",
-            message: "Would you like to add [DEPARTMENTS] [ROLES] or [EMPLOYEES]",
-            choices: ["DEPARTMENTS", "ROLES", "EMPLOYEES"]
+            message: "Create a [Department], a [Role] or [Employee] or [View] the following.",
+            choices: ["Department", "Role", "Employee", "View"]
         })
-
-        .then(function (answer) {
-            // Based on answer, call the Departments, Roles or Employees function
-            if (answer.addDeptEmpRole === "DEPARTMENTS") {
-                addDepartments();
+        .then(function (promtAnswers) {
+            if (promtAnswers.create === "Department") {
+                addDepartment();
             }
-            else if (answer.addDeptEmpRole === "ROLES") {
-                addRoles();
+            else if (promtAnswers.create === "Role") {
+                addRole();
             }
-            else if (answer.addDeptEmpRole === "EMPLOYEES") {
-                addEmployees();
+            else if (promtAnswers.create === "Employee") {
+                addEmployee();
             }
             else if (promtAnswers.create === "View") {
-                    tableData();
-            } else {
+                viewTable();
+            }
+            else {
                 connection.end();
             }
-        });
+        })
 }
-
-// Function to handle adding Departments
-function addDepartments() {
-    // Prompt for Departments being added
+//function to add department
+function addDepartment() {
     inquirer
         .prompt([
             {
-                name: "department",
+                name: "division",
                 type: "input",
-                message: "Which Department would you like to add?"
-            }
-        ])
-        .then(function(answer) {
-            // After prompting, insert a new Department into the department table
-            connection.query(
-                "INSERT INTO DEPARTMENTS SET ?",
-                {
-                    name: answer.department
-                },
-
-                function (err) {
-                    if (err) throw err;
-                    console.log("DEPARTMENT ADDED!");
-                    // Then prompt user to add more Departments, Employees or Roles
-                    runapp();
-                }
-            );
-        });
-}
-
-// Function to handle adding Roles
-function addRoles() {
-    // Prompt for Roles being added
-    inquirer
-        .prompt([
-            {
-                name: "role",
-                type: "input",
-                message: "Which Roles would you like to add?"
+                message: "Which department would you like to add?",
             }
         ])
         .then(function (answer) {
-            // After prompting, insert a new Role into the Role table
             connection.query(
-                "INSERT INTO ROLES SET ?",
+                "INSERT INTO department SET ?",
                 {
-                    name: answer.role
+                    name: answer.division
                 },
-
                 function (err) {
                     if (err) throw err;
-                    console.log("ROLE ADDED!");
-                    // Then prompt user to add more Departments, Employees or Roles
-                    runapp();
+                    console.log("Department added!");
+                    runApp();
                 }
             );
         });
-}// Function to handle adding Employees
-function addEmployees() {
-    // Prompt for Employees being added
+}
+//function to add role
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                name: "title",
+                type: "input",
+                message: "Which title would you like to add?",
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "How much would you lke to make the employee's salary?",
+            },
+            {
+                name: "departmentId",
+                type: "input",
+                message: "Which departmentID would you like to add?",
+            }
+        ])
+        .then(function (answer) {
+
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                    title: answer.department,
+                    salary: answer.salary,
+                    department_id: answer.departmentId
+                },
+                function (err) {
+                    if (err) throw err;
+                    console.log("Role added!");
+                    runApp();
+                }
+            );
+        });
+}
+//function to add employee
+function addEmployee() {
     inquirer
         .prompt([
             {
                 name: "first",
                 type: "input",
-                message: "What is the employee's first name that you would like to add?",
+                message: "What's the employee's first name?",
             },
             {
                 name: "last",
                 type: "input",
-                message: "What is the employee's last name that you would like to add?",
+                message: "What's the employee's last name?",
             },
             {
-                name: "role",
+                name: "roleId",
                 type: "input",
-                message: "Which role would you like to give the employee?"
+                message: "What's the eployee's role?"
             },
-       
             {
-                name: "manager",
+                name: "managerId",
                 type: "input",
-                message: "Who will be their manager?"
+                message: "What's the managerID for this employee?",
             }
-
         ])
         .then(function (answer) {
-            // After prompting, insert a new Employee into the Role table
             connection.query(
-                "INSERT INTO EMPLOYEES SET ?",
+                "INSERT INTO employee SET ?",
                 {
                     first_name: answer.first,
                     last_name: answer.last,
-                    role_id: answer.role,
-                    manager: answer.manager.id
+                    role_id: answer.roleId,
+                    manager_id: answer.managerId
                 },
-
                 function (err) {
                     if (err) throw err;
-                    console.log("Employee ADDED!");
-                    // Then prompt user to add more Departments, Employees or Roles
-                    runapp();
+                    console.log("Employee added!");
+                    runApp();
                 }
             );
         });
 }
-
-//View table data function
-  function tableData() {
+//Function to view table
+function viewTable() {
     inquirer
-      .prompt({
-        name: "table",
-        type: "list",
-        message: "Which category would you like to view?",
-        choices: ["Department", "Role", "Employee"]
-      })
-      .then(function(answer) {
-        if (answer.table === "Department") {
-         deptData();
-        }
-        else if(answer.table === "Role") {
-          roleData();
-        } 
-        else if(answer.table === "Employee") {
-          employeeData();
-        }
-        else{
-          connection.end();
-        }
-      });
-  }
+        .prompt({
+            name: "viewTable",
+            type: "list",
+            message: "Which table would you like to view?",
+            choices: ["Department", "Role", "Employee"]
+        })
+        .then(function (answer) {
+            if (answer.viewTable === "Department") {
+                viewDept();
+            }
+            else if (answer.viewTable === "Role") {
+                viewRole();
+            }
+            else if (answer.viewTable === "Employee") {
+                viewEmployee();
+            }
+            else {
+                connection.end();
+            }
+        });
+}
 
-  function deptData() {
-    connection.query("SELECT * FROM department", function(err,res){
-      if (err) throw err;
-      console.table(res);
-      runSearch();
+function viewDept() {
+    connection.query("SELECT * FROM department", function (err, res) {
+        if (err) throw err;
+        console.viewTable(res);
+        runApp();
     })
-  };
-  
-  function roleData() {
-    connection.query("SELECT * FROM role", function(err,res){
-      if (err) throw err;
-      console.table(res);
-      runSearch();
+};
+
+function viewRole() {
+    connection.query("SELECT * FROM role", function (err, res) {
+        if (err) throw err;
+        console.viewTable(res);
+        runApp();
     })
-  };
-  
-  function employeeData() {
-    connection.query("SELECT * FROM employee", function(err,res){
-      if (err) throw err;
-      console.table(res);
-      runSearch();
+};
+
+function viewEmployee() {
+    connection.query("SELECT * FROM employee", function (err, res) {
+        if (err) throw err;
+        console.viewTable(res);
+        runApp();
     })
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};

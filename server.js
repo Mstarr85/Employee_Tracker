@@ -1,5 +1,6 @@
 var mysql = require("mysql");
-var inquirer = require("inquirer");
+const inquirer = require("inquirer");
+const cTable = require('console.table');
 
 //create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -46,7 +47,7 @@ function runApp() {
                 viewTable();
             }
             else {
-                connection.end();
+                // connection.end();
             }
         })
 }
@@ -62,14 +63,12 @@ function addDepartment() {
         ])
         .then(function (answer) {
             connection.query(
-                "INSERT INTO department SET ?",
-                {
-                    name: answer.division
-                },
+                "INSERT INTO department (name) VALUES (?)", answer.division,
                 function (err) {
                     if (err) throw err;
                     console.log("Department added!");
                     runApp();
+                    // connection.end();
                 }
             );
         });
@@ -97,19 +96,16 @@ function addRole() {
         .then(function (answer) {
 
             connection.query(
-                "INSERT INTO role SET ?",
-                {
-                    title: answer.department,
-                    salary: answer.salary,
-                    department_id: answer.departmentId
-                },
-                function (err) {
+                "INSERT INTO roles SET ?",
+                { title: answer.title, salary: answer.salary, department_id: answer.departmentId }, function (err) {
                     if (err) throw err;
                     console.log("Role added!");
                     runApp();
+                    // connection.end();
                 }
             );
-        });
+        })
+        .catch(err => console.log(err));
 }
 //function to add employee
 function addEmployee() {
@@ -138,13 +134,14 @@ function addEmployee() {
         ])
         .then(function (answer) {
             connection.query(
+                // "INSERT INTO employee (first_name, last_name, role_id, ) VALUES (?,?,?,?)",
                 "INSERT INTO employee SET ?",
-                {
-                    first_name: answer.first,
-                    last_name: answer.last,
-                    role_id: answer.roleId,
-                    manager_id: answer.managerId
-                },
+                { first_name: answer.first, last_name: answer.last, roles_id: answer.roleId, manager_id: answer.managerId },
+                // first_name: answer.first,
+                // last_name: answer.last,
+                // roles_id: answer.roleId,
+                // manager_id: answer.managerId
+
                 function (err) {
                     if (err) throw err;
                     console.log("Employee added!");
@@ -174,30 +171,42 @@ function viewTable() {
             }
             else {
                 connection.end();
+
             }
         });
 }
-
 function viewDept() {
     connection.query("SELECT * FROM department", function (err, res) {
         if (err) throw err;
-        console.viewTable(res);
+        for (var i = 0; i < res.length; i++) {
+            console.log(res[i].id + " | " + res[i].name);
+        }
+        console.log("-----------------------------------");
         runApp();
-    })
-};
+    });
 
+}
 function viewRole() {
-    connection.query("SELECT * FROM role", function (err, res) {
+    connection.query("SELECT * FROM roles", function (err, res) {
         if (err) throw err;
-        console.viewTable(res);
+        for (var i = 0; i < res.length; i++) {
+            console.log(res[i].id + " | " + res[i].title + " | " + res[i].salary + " | " + res[i].department_id);
+        }
+        console.log("-----------------------------------");
         runApp();
+
     })
 };
-
 function viewEmployee() {
     connection.query("SELECT * FROM employee", function (err, res) {
         if (err) throw err;
-        console.viewTable(res);
+        for (var i = 0; i < res.length; i++) {
+            console.log(res[i].id + " | " + res[i].first_name + " | " + res[i].last_name + " | " + res[i].roles_id + " | " + res[i].manager_id);
+        }
+        console.log("-----------------------------------")
         runApp();
     })
-};
+    console.log(query.sql);
+    connection.end();
+}
+

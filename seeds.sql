@@ -33,6 +33,8 @@ INSERT INTO employee ( first_name, last_name, roles_id, manager_id)
         ("Thomas", "Anderson", 6, null),
         ("Agent", "Smith", 7, null);
      
-
+SELECT * FROM department;
+SELECT * FROM roles;
+SELECT * FROM employee;
 
 

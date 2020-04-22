@@ -21,13 +21,11 @@ A command-line application built to allow user to keep track of employees, add o
   * Run command "node server.js"
 
   * Run NPM I for dependencies.
-
-  * Follow command-line prompts.
-
-  * Follow the prompts
   
   ## How It Works
   
+  * Follow command-line prompts.
+
   * Add departments, roles or employees
 
   * View departments, roles or employees

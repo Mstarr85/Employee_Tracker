@@ -37,6 +37,10 @@ A command-line application built to allow user to keep track of employees, add o
   * Add salary to an employee
   
   * Add a mananger I.D. 
+  
+  ## Github Repo Link
+  
+  https://github.com/Mstarr85/Employee_Tracker
 
   
 

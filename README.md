@@ -2,17 +2,11 @@
 
 # Employee_Tracker
 
-# Description
+## Description
 
-A command-line application built allows the user to:
+A command-line application built to allow user to keep track of employees, add or update their role, department, salary or user id
 
-  * Add departments, roles, employees
-
-  * View departments, roles, employees
-
-  * Update employee roles
-
-# Installation Instructions
+## Installation Instructions
   
   * Clone repository to local machine
 
@@ -33,6 +27,17 @@ A command-line application built allows the user to:
   * Follow the prompts
   
   ## How It Works
+  
+  * Add departments, roles or employees
+
+  * View departments, roles or employees
+
+  * Update employee roles
+  
+  * Add salary to an employee
+  
+  * Add a mananger I.D. 
+
   
 
   

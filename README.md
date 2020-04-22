@@ -31,6 +31,9 @@ A command-line application built allows the user to:
   * Follow command-line prompts.
 
   * Follow the prompts
+  
+  ## How It Works
+  
 
   
 

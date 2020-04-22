@@ -39,7 +39,18 @@ A command-line application built to allow user to keep track of employees, add o
   ## Github Repo Link
   
   https://github.com/Mstarr85/Employee_Tracker
-
+  
+  ## Technologies Used 
+  
+  * NodeJS
+  * Inquirer
+  * MySQL
+  
+  ## Author
+  
+  * Matthew Starr
+  
+  
   
 
   

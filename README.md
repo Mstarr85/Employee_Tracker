@@ -48,7 +48,7 @@ A command-line application built to allow user to keep track of employees, add o
   
   ## Author
   
-  * Matthew Starr
+  Matthew Starr
   
   ## License
   

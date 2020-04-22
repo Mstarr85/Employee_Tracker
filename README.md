@@ -12,17 +12,25 @@ A command-line application built allows the user to:
 
   * Update employee roles
 
-# Instructions
+# Installation Instructions
+  
+  * Clone repository to local machine
 
-  * Run the Schema.sql and seeds.sql files in SQL to set up database and tables
+  * Copy and paste the Schema.sql and seeds.sql files in SQL to set up database and tables
+  
+  * Run all queries in SQL 
 
-  * Run server.js in terminal using node 
+  * Open Terminal or Command Prompt 
+  
+  * Navigate to the server.js file 
+  
+  * Run command "node server.js"
 
   * Run NPM I for dependencies.
 
   * Follow command-line prompts.
 
-  * Follow prompts
+  * Follow the prompts
 
   
 

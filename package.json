@@ -4,9 +4,9 @@
   "description": "Employee Tracking System",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "console.table": "^0.10.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "inquirer": "^7.0.4",
     "mysql": "^2.18.1",
     "util": "^0.12.1"
